@@ -48,10 +48,10 @@ button { color: inherit; }
 .tagline { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--red); }.tagline span { white-space: nowrap; }.tagline i { display: block; flex: 0 1 72px; min-width: 20px; height: 2px; border-radius: 2px; background: currentColor; }
 
 .hero-section { min-height: 760px; height: calc(100vh - 115px); max-height: 900px; position: relative; display: grid; grid-template-columns: 1.08fr .92fr; background: var(--cream); }
-.hero-copy { padding: 11vh 5vw 70px max(5vw, calc((100vw - 1420px) / 2 + 42px)); display: flex; flex-direction: column; align-items: flex-start; position: relative; z-index: 2; }
+.hero-copy { padding: 11vh 3vw 70px max(5vw, calc((100vw - 1420px) / 2 + 42px)); display: flex; flex-direction: column; align-items: flex-start; position: relative; z-index: 2; }
 .hero-kicker { display: flex; align-items: center; gap: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .19em; font-weight: 600; }
 .hero-kicker span { width: 34px; height: 1px; background: var(--red); }
-.hero-copy h1 { font-size: clamp(56px, 6vw, 98px); margin: 30px 0 28px; white-space: nowrap; }
+.hero-copy h1 { font-size: clamp(56px, 5.7vw, 94px); font-weight: 600; margin: 30px 0 28px; white-space: nowrap; }
 .hero-copy h1 em { display: inline-block; margin-left: 48px; }
 .hero-copy > p { max-width: 560px; font-family: var(--serif); color: var(--muted); font-size: 21px; line-height: 1.55; }
 .hero-actions { display: flex; align-items: center; gap: 31px; margin-top: 34px; }.hero-copy .tagline { margin-top: 40px; }
