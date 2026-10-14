@@ -132,13 +132,24 @@ const fadeUp = {
   transition: { duration: 0.7, ease: [0.25, 1, 0.5, 1] as const },
 }
 
-function Logo({ footer = false }: { footer?: boolean }) {
+function Logo() {
   return (
-    <Link to="/" className={`logo ${footer ? 'logo-footer' : ''}`} aria-label="The Cheese Couriers home">
-      <span className="logo-mark"><span /><span /><span /></span>
-      <span><b>The Cheese</b><em>Couriers</em></span>
+    <Link to="/" className="logo" aria-label="The Cheese Couriers home">
+      <img src="/brand/wordmark-red.png" alt="The Cheese Couriers" />
     </Link>
   )
+}
+
+function Mountain({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 344 150" fill="currentColor" aria-hidden="true">
+      <path d="M0 148 32 118l10-2h4l20-32 4-1 4 10 12-14 16-10 18-21 3 1 9 27 6 3 5-2 5-14 7-3 15-29 13-10L198 0l22 31 10-3 4 1 16 30 18 14 14 22 5-4 6-2 50 60Z" />
+    </svg>
+  )
+}
+
+function Tagline() {
+  return <div className="tagline"><span>A fair share to those who made it</span><i aria-hidden="true" /></div>
 }
 
 function Announcement() {
@@ -210,7 +221,7 @@ function CartDrawer() {
                   ))}
                 </div>
                 <div className="drawer-impact"><Heart size={18} /> <span><b>${Math.round(total * .25)}</b> from this order supports independent makers.</span></div>
-                <div className="drawer-total"><div><span>Subtotal</span><b>${total.toFixed(2)} AUD</b></div><p>Chilled shipping calculated at checkout.</p><Link to="/checkout" className="button button-gold full" onClick={() => setCartOpen(false)}>Continue to checkout <ArrowRight /></Link><small><ShieldCheck size={14} /> Secure simulated checkout</small></div>
+                <div className="drawer-total"><div><span>Subtotal</span><b>${total.toFixed(2)} AUD</b></div><p>Chilled shipping calculated at checkout.</p><Link to="/checkout" className="button button-primary full" onClick={() => setCartOpen(false)}>Continue to checkout <ArrowRight /></Link><small><ShieldCheck size={14} /> Secure simulated checkout</small></div>
               </>
             )}
           </motion.aside>
@@ -223,9 +234,9 @@ function CartDrawer() {
 function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-lemon"><img src="/img/lemon-4.png" alt="" /></div>
+      <Mountain className="footer-motif" />
       <div className="footer-top">
-        <div className="footer-intro"><Logo footer /><p>Extraordinary cheese, delivered with its story—and a fairer share returned to the hands that made it.</p><div className="socials"><a href="#instagram" aria-label="Instagram"><Camera /></a><a href="mailto:hello@thecheesecouriers.com" aria-label="Email"><Mail /></a></div></div>
+        <div className="footer-intro"><Link to="/" className="footer-logo" aria-label="The Cheese Couriers home"><img src="/brand/wordmark-cream.png" alt="The Cheese Couriers" /></Link><Tagline /><p>Extraordinary cheese, delivered with its story—and a fairer share returned to the hands that made it.</p><div className="socials"><a href="#instagram" aria-label="Instagram"><Camera /></a><a href="mailto:hello@thecheesecouriers.com" aria-label="Email"><Mail /></a></div></div>
         <div className="footer-links"><div><span>Discover</span><Link to="/shop">Monthly boxes</Link><Link to="/shop">Cheese counter</Link><Link to="/about">Our makers</Link></div><div><span>Help</span><Link to="/track">Track a box</Link><a href="#delivery">Delivery & care</a><a href="mailto:hello@thecheesecouriers.com">Contact us</a></div><div><span>Visit the counter</span><p>Friday–Sunday<br />10:00–16:00</p><p>82 Myrtle Lane<br />Melbourne, VIC</p></div></div>
       </div>
       <div className="footer-bottom"><span>© 2026 The Cheese Couriers</span><span>Made carefully, like good cheese.</span><div><a href="#privacy">Privacy</a><a href="#terms">Terms</a></div></div>
@@ -235,7 +246,7 @@ function Footer() {
 
 function Page({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   return <><Header /><main>{children}</main><Footer /><CartDrawer /></>
 }
 
@@ -258,18 +269,19 @@ function Home() {
   return (
     <>
       <section className="hero-section">
-        <img className="hero-lemon" src="/img/lemon-3.png" alt="" />
+        <Mountain className="hero-motif" />
         <div className="hero-copy">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }} className="hero-kicker"><span /> Cheese with a passport</motion.div>
           <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .75, delay: .08 }}>The world’s best cheese,<br /><em>sent with purpose.</em></motion.h1>
           <motion.p initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .16 }}>A monthly collection of small-batch cheeses from overlooked makers. Hand-cut, beautifully packed, and delivered at just the right moment.</motion.p>
           <motion.div className="hero-actions" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .24 }}><Link className="button button-dark" to="/shop">Choose your box <ArrowRight /></Link><Link className="text-link" to="/about">Meet the makers <ArrowUpRight /></Link></motion.div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .4 }}><Tagline /></motion.div>
           <motion.div className="hero-proof" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .55 }}><div className="avatar-stack"><img src="/img/farmer-son.jpg" alt="" /><img src="/img/cheesemaker.jpg" alt="" /><img src="/img/cow-field.jpg" alt="" /></div><div><div className="stars"><Star /><Star /><Star /><Star /><Star /></div><span>Loved by 2,400+ curious eaters</span></div></motion.div>
         </div>
         <motion.div className="hero-visual" initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .9, ease: [0.25, 1, 0.5, 1] }}>
           <img className="hero-photo" src="/img/cheese-aging.jpg" alt="Rows of artisan cheese wheels maturing in a cellar" />
           <div className="hero-photo-label"><span>01 / Source</span><p>Maturing slowly in Somerset</p></div>
-          <motion.div className="box-mock" animate={{ y: [0, -7, 0], rotate: [-2, -1, -2] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}><div className="box-top"><Logo /><img src="/img/lemon-2.png" alt="" /></div><div className="box-strip">Field notes · No. 08</div></motion.div>
+          <motion.div className="box-mock" animate={{ y: [0, -7, 0], rotate: [-2, -1, -2] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}><div className="box-top"><img src="/brand/wordmark-red.png" alt="The Cheese Couriers" /><Mountain className="box-motif" /></div><div className="box-strip">Field notes · No. 08</div></motion.div>
           <div className="hero-stamp"><span>25%</span><small>back to<br />makers</small></div>
         </motion.div>
         <div className="scroll-note"><span /> Scroll to discover</div>
@@ -301,7 +313,7 @@ function Home() {
       </section>
 
       <section className="impact-section">
-        <img src="/img/lemon-1.png" className="impact-lemon" alt="" />
+        <Mountain className="impact-motif" />
         <motion.div {...fadeUp}><span className="eyebrow light">The good we’ve delivered so far</span><h2>Every box moves<br />the dial.</h2><p>We exist to keep rural cheesemaking vibrant, valuable and on the map.</p><Link to="/about" className="button button-light">Read our 2026 impact note <ArrowRight /></Link></motion.div>
         <motion.div className="impact-numbers" {...fadeUp}><div><strong>42</strong><span>Independent makers<br />in our community</span></div><div><strong>25%</strong><span>Of earnings returned<br />to makers & farmers</span></div><div><strong>8.2t</strong><span>Of beautiful cheese<br />kept from waste</span></div></motion.div>
       </section>
@@ -316,7 +328,7 @@ function Home() {
         <motion.div className="newsletter" {...fadeUp}><span className="eyebrow">A good note, occasionally</span><h3>Join the cheese letter.</h3><p>New makers, field notes and first dibs on rare wheels. No filler.</p><form onSubmit={(e) => e.preventDefault()}><input type="email" placeholder="Your email address" aria-label="Email address" /><button aria-label="Subscribe"><ArrowRight /></button></form></motion.div>
       </section>
 
-      <section className="final-cta"><img src="/img/lemon-3.png" alt="" /><motion.div {...fadeUp}><span className="eyebrow">Your next favourite cheese is waiting</span><h2>Send your tastebuds<br />somewhere new.</h2><p>Cancel or pause anytime. No cheese snobbery required.</p><div><Link to="/shop" className="button button-dark">Choose your box <ArrowRight /></Link><button className="button button-cream" onClick={() => add(products[1])}>Add our favourite <Plus /></button></div></motion.div></section>
+      <section className="final-cta"><Mountain className="final-motif" /><motion.div {...fadeUp}><span className="eyebrow">Your next favourite cheese is waiting</span><h2>Send your tastebuds<br />somewhere new.</h2><p>Cancel or pause anytime. No cheese snobbery required.</p><div><Link to="/shop" className="button button-dark">Choose your box <ArrowRight /></Link><button className="button button-cream" onClick={() => add(products[1])}>Add our favourite <Plus /></button></div></motion.div></section>
     </>
   )
 }
@@ -345,7 +357,7 @@ function ProductDetail() {
     <>
       <section className="detail-section">
         <motion.div className="detail-image" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}><img src={product.image} alt={product.name} />{product.badge && <span className="badge">{product.badge}</span>}<div className="detail-origin"><MapPin /><span>Made in<br /><b>{product.origin}</b></span></div></motion.div>
-        <motion.div className="detail-copy" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .1 }}><Link to="/shop" className="back-link">← Back to the counter</Link><span className="eyebrow">{product.eyebrow}</span><h1>{product.name}</h1><div className="detail-price">${product.price}<small>{product.category === 'box' ? ' AUD / month' : ' AUD'}</small></div><p className="detail-lead">{product.longDescription}</p><div className="taste-notes"><span>Tastes like</span>{product.tasting.map((note) => <b key={note}>{note}</b>)}</div>{product.includes && <div className="includes"><span>Inside your dispatch</span>{product.includes.map((item) => <p key={item}><Check /> {item}</p>)}</div>}<div className="detail-buy"><div className="qty large"><button onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus /></button><b>{quantity}</b><button onClick={() => setQuantity(quantity + 1)}><Plus /></button></div><button className="button button-gold" onClick={() => add(product, quantity)}>Add to your bag · ${product.price * quantity} <ShoppingBag /></button></div><div className="detail-assurance"><span><PackageCheck /> Chilled & carefully packed</span><span><Heart /> 25% goes back to makers</span></div></motion.div>
+        <motion.div className="detail-copy" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .1 }}><Link to="/shop" className="back-link">← Back to the counter</Link><span className="eyebrow">{product.eyebrow}</span><h1>{product.name}</h1><div className="detail-price">${product.price}<small>{product.category === 'box' ? ' AUD / month' : ' AUD'}</small></div><p className="detail-lead">{product.longDescription}</p><div className="taste-notes"><span>Tastes like</span>{product.tasting.map((note) => <b key={note}>{note}</b>)}</div>{product.includes && <div className="includes"><span>Inside your dispatch</span>{product.includes.map((item) => <p key={item}><Check /> {item}</p>)}</div>}<div className="detail-buy"><div className="qty large"><button onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus /></button><b>{quantity}</b><button onClick={() => setQuantity(quantity + 1)}><Plus /></button></div><button className="button button-primary" onClick={() => add(product, quantity)}>Add to your bag · ${product.price * quantity} <ShoppingBag /></button></div><div className="detail-assurance"><span><PackageCheck /> Chilled & carefully packed</span><span><Heart /> 25% goes back to makers</span></div></motion.div>
       </section>
       <section className="product-story"><motion.div {...fadeUp}><span className="section-tag">At the right moment</span><h2>Cut fresh. Wrapped by hand.<br /><em>Delivered in its prime.</em></h2></motion.div><motion.div {...fadeUp}><p>Cheese is alive, and timing matters. Our affineurs monitor each wheel, choosing your cut only when texture, aroma and flavour are in perfect conversation.</p><p>Every delivery travels chilled in recyclable wool insulation, with a simple care card so your cheese arrives—and stays—at its best.</p></motion.div></section>
       <section className="recommend-section"><div className="section-heading"><div><span className="eyebrow">Keep exploring</span><h2>You may also like.</h2></div><Link to="/shop" className="text-link">See everything <ArrowRight /></Link></div><div className="product-grid">{products.filter((item) => item.id !== product.id).slice(0, 3).map((item, i) => <ProductCard key={item.id} product={item} index={i} />)}</div></section>
@@ -392,7 +404,7 @@ function Track() {
   const submit = (e: FormEvent) => { e.preventDefault(); setActive(Boolean(code)) }
   return (
     <>
-      <section className="track-hero"><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}><span className="eyebrow">Follow the flavour</span><h1>Where’s my<br /><em>cheese?</em></h1><p>Enter your courier number for a live look at your box’s journey.</p><form onSubmit={submit}><div><Package /><input value={code} onChange={(e) => setCode(e.target.value)} placeholder="e.g. CC-28471" aria-label="Courier number" /></div><button className="button button-gold">Track my box <ArrowRight /></button></form><small>Try the demo number <button onClick={() => { setCode('CC-28471'); setActive(true) }}>CC-28471</button></small></motion.div><motion.img initial={{ opacity: 0 }} animate={{ opacity: 1 }} src="/img/lemon-2.png" alt="" /></section>
+      <section className="track-hero"><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}><span className="eyebrow">Follow the flavour</span><h1>Where’s my<br /><em>cheese?</em></h1><p>Enter your courier number for a live look at your box’s journey.</p><form onSubmit={submit}><div><Package /><input value={code} onChange={(e) => setCode(e.target.value)} placeholder="e.g. CC-28471" aria-label="Courier number" /></div><button className="button button-primary">Track my box <ArrowRight /></button></form><small>Try the demo number <button onClick={() => { setCode('CC-28471'); setActive(true) }}>CC-28471</button></small></motion.div><Mountain className="track-motif" /></section>
       {active && <section className="tracking-section"><motion.div className="tracking-head" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}><div><span className="status-pill"><span /> In transit</span><h2>Your August dispatch</h2><p>Courier no. {code.toUpperCase()}</p></div><div className="eta"><Clock3 /><span>Estimated arrival<b>Today, 2:40–4:10 PM</b></span></div></motion.div><div className="tracking-grid"><motion.div initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}><TrackingMap /></motion.div><motion.div className="tracking-timeline" initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }}><div className="timeline-progress"><span /></div>{[
         { icon: <CircleCheck />, title: 'Packed at peak ripeness', meta: 'Myrtle Lane · Yesterday, 9:14 AM', done: true },
         { icon: <CircleCheck />, title: 'Collected by our chilled courier', meta: 'Yesterday, 4:42 PM', done: true },
@@ -424,7 +436,7 @@ function Checkout() {
           <fieldset><legend><span>1</span> Contact</legend><label>Email address<input required type="email" placeholder="you@example.com" /></label><label className="checkbox"><input type="checkbox" /> Send me occasional field notes and rare releases</label></fieldset>
           <fieldset><legend><span>2</span> Delivery</legend><div className="field-grid"><label className="wide">Full name<input required placeholder="Tom Maynard" /></label><label className="wide">Street address<input required placeholder="42 Myrtle Lane" /></label><label>City<input required placeholder="Melbourne" /></label><label>State<select defaultValue="VIC"><option>VIC</option><option>NSW</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option></select></label><label>Postcode<input required inputMode="numeric" placeholder="3000" /></label><label>Country<select><option>Australia</option></select></label></div></fieldset>
           <fieldset><legend><span>3</span> Payment</legend><div className="payment-card"><div className="payment-card-head"><span><CreditCard /> Card</span><div><b>VISA</b><b>MC</b><b>AMEX</b></div></div><label>Card number<div className="input-icon"><input required value={card} onChange={(e) => setCard(e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim())} placeholder="4242 4242 4242 4242" /><LockKeyhole /></div></label><div className="field-grid"><label>Expiry<input required placeholder="MM / YY" /></label><label>Security code<input required placeholder="CVC" /></label></div></div><p className="test-note"><Sparkles /> Try the test card <button type="button" onClick={() => setCard('4242 4242 4242 4242')}>4242 4242 4242 4242</button></p></fieldset>
-          <button className="button button-gold pay-button" disabled={processing || !items.length}>{processing ? <><span className="spinner" /> Preparing your order…</> : <>Pay ${(total + shipping).toFixed(2)} AUD <ArrowRight /></>}</button><small className="checkout-safe"><ShieldCheck /> Encrypted-style demo · No payment data is stored</small>
+          <button className="button button-primary pay-button" disabled={processing || !items.length}>{processing ? <><span className="spinner" /> Preparing your order…</> : <>Pay ${(total + shipping).toFixed(2)} AUD <ArrowRight /></>}</button><small className="checkout-safe"><ShieldCheck /> Encrypted-style demo · No payment data is stored</small>
         </motion.form>
         <aside className="checkout-summary"><span className="eyebrow">Your dispatch</span>{items.length === 0 ? <div className="checkout-empty"><ShoppingBag /><p>Your bag is empty.</p><Link to="/shop">Choose some cheese</Link></div> : <>{items.map(({ product, quantity }) => <div className="summary-line" key={product.id}><div><img src={product.image} alt="" /><span>{quantity}</span></div><p><b>{product.name}</b><small>{product.eyebrow}</small></p><strong>${product.price * quantity}</strong></div>)}<div className="summary-totals"><p><span>Subtotal</span><b>${total.toFixed(2)}</b></p><p><span>Chilled delivery</span><b>{shipping === 0 ? 'Complimentary' : `$${shipping.toFixed(2)}`}</b></p><p className="grand-total"><span>Total <small>AUD</small></span><b>${(total + shipping).toFixed(2)}</b></p></div><div className="summary-impact"><Heart /><p><b>Your order gives back ${Math.round(total * .25)}</b><span>Directly supporting our independent makers.</span></p></div></>}</aside>
       </div>
@@ -433,7 +445,7 @@ function Checkout() {
 }
 
 function OrderConfirmation() {
-  return <section className="confirmation"><motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }}><div className="success-icon"><Check /></div><span className="eyebrow">Order CC-28471 confirmed</span><h1>Your cheese is<br /><em>on the itinerary.</em></h1><p>We’ve sent a simulated confirmation to your inbox. Our team is selecting your cheeses and packing them chilled.</p><div className="confirmation-card"><div><PackageCheck /><span>Estimated dispatch<b>Monday, 31 August</b></span></div><div><Navigation /><span>Track with<b>CC-28471</b></span></div></div><div className="confirmation-actions"><Link className="button button-dark" to="/track">Track your box <ArrowRight /></Link><Link className="text-link" to="/">Back to home</Link></div></motion.div><img src="/img/lemon-1.png" alt="" /></section>
+  return <section className="confirmation"><motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }}><div className="success-icon"><Check /></div><span className="eyebrow">Order CC-28471 confirmed</span><h1>Your cheese is<br /><em>on the itinerary.</em></h1><p>We’ve sent a simulated confirmation to your inbox. Our team is selecting your cheeses and packing them chilled.</p><div className="confirmation-card"><div><PackageCheck /><span>Estimated dispatch<b>Monday, 31 August</b></span></div><div><Navigation /><span>Track with<b>CC-28471</b></span></div></div><div className="confirmation-actions"><Link className="button button-dark" to="/track">Track your box <ArrowRight /></Link><Link className="text-link" to="/">Back to home</Link></div></motion.div><Mountain className="confirm-motif" /></section>
 }
 
 function NotFound() {
